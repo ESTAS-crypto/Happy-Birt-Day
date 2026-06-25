@@ -33,7 +33,7 @@ body {
   background: radial-gradient(circle at center, #26071a 0%, var(--color-bg-start) 100%);
   color: var(--color-text-main);
   min-height: 100vh;
-  overflow-x: hidden;
+  overflow: hidden; /* Lock scroll initially until envelope is opened */
   position: relative;
 }
 
@@ -1284,4 +1284,16 @@ body {
   color: var(--color-text-main);
   margin-bottom: 30px;
   text-align: left;
+}
+
+/* Balloons container overlay to prevent vertical page height extension */
+#balloons-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 9999;
 }

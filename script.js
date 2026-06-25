@@ -43,6 +43,10 @@ document.addEventListener("DOMContentLoaded", () => {
       welcomeScreen.style.opacity = "0";
       welcomeScreen.style.visibility = "hidden";
       
+      // Unlock vertical scrolling on envelope open
+      document.body.style.overflow = "auto";
+      document.body.style.overflowX = "hidden";
+      
       mainContent.classList.remove("hidden");
       setTimeout(() => {
         mainContent.classList.add("visible");
@@ -521,7 +525,8 @@ document.addEventListener("DOMContentLoaded", () => {
           balloon.remove();
         });
         
-        document.body.appendChild(balloon);
+        const container = document.getElementById("balloons-container") || document.body;
+        container.appendChild(balloon);
         
         // Clean up balloon after animation completes
         setTimeout(() => {
