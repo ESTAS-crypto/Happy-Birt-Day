@@ -53,7 +53,7 @@ const CONFIG = {
       rotate: 90,
       scale: 1.45,
       x: 45, // Geser ke kanan agar wajah cowok tidak terpotong
-      y: 15 // Geser sedikit ke bawah agar wajah cowok tidak terpotong (tapi tidak sampai berlubang di atas)
+      y: 45 // Geser sedikit ke bawah agar wajah cowok tidak terpotong (tapi tidak sampai berlubang di atas)
     }
   ],
 
