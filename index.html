@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ucapan Selamat Ulang Tahun Romantis dan Spesial">
+  <title>Spesial Untukmu 💖</title>
+  
+  <!-- Google Fonts: Outfit for body, Dancing Script & Playfair Display for romantic look -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Outfit:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;0,800;1,400&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome for romantic icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom Styling -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Audio Player (Hidden by default, controlled via UI) -->
+  <audio id="bg-music" loop>
+    <!-- Music source will be set dynamically via script.js from config.js -->
+    Browser kamu tidak mendukung pemutaran musik.
+  </audio>
+
+  <!-- Floating Audio Control Button -->
+  <button id="music-toggle" class="music-btn hidden" aria-label="Toggle Music">
+    <i class="fas fa-music"></i>
+  </button>
+
+  <!-- Background Hearts Canvas -->
+  <canvas id="canvas-hearts"></canvas>
+
+  <!-- 1. ENVELOPE WELCOME SCREEN -->
+  <div id="welcome-screen" class="welcome-container">
+    <div class="envelope-wrapper">
+      <div class="envelope" id="envelope-main">
+        <div class="flap"></div>
+        <div class="pocket"></div>
+        <div class="letter-preview">
+          <p class="preview-text">Ada pesan manis menunggumu...</p>
+        </div>
+        <div class="hearts-burst">
+          <div class="burst-heart h1"></div>
+          <div class="burst-heart h2"></div>
+          <div class="burst-heart h3"></div>
+        </div>
+      </div>
+      <button id="open-envelope-btn" class="open-btn">
+        <i class="fas fa-heart"></i> Buka Surat Cinta
+      </button>
+    </div>
+    <p class="welcome-hint">Klik tombol di atas untuk membuka ucapan spesial ✨</p>
+  </div>
+
+  <!-- 2. MAIN WEBSITE CONTENT (Hidden initially, faded in after opening envelope) -->
+  <main id="main-content" class="main-layout hidden">
+    
+    <!-- Hero Header Section -->
+    <header class="hero-section">
+      <div class="avatar-container">
+        <div class="avatar-pulse"></div>
+        <!-- Target for profile picture / placeholder -->
+        <img id="girl-photo-avatar" src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=300&auto=format&fit=crop&q=60" alt="Foto Pacar" class="avatar-img">
+      </div>
+      <h1 class="main-heading">Selamat Ulang Tahun, <span id="partner-nickname" class="highlight-text">Sayang</span>! 🎂</h1>
+      <p class="sub-heading">Semoga hari-harimu selalu seindah senyumanmu.</p>
+    </header>
+
+    <!-- Romantic Letter Section -->
+    <section class="section-container card-glass letter-section" id="letter-card">
+      <h2 class="section-title"><i class="fas fa-envelope-open-text icon-heart"></i> Surat Cinta Untukmu</h2>
+      <div class="letter-body">
+        <div id="typewriter-text" class="typewriter-content"></div>
+        <div class="heart-divider">
+          <span></span>
+          <i class="fas fa-heart"></i>
+          <span></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Photo Gallery Polaroid Section -->
+    <section class="section-container gallery-section" id="gallery-card">
+      <h2 class="section-title"><i class="fas fa-camera-retro icon-heart"></i> Galeri Kenangan Indah</h2>
+      <p class="gallery-desc">Momen-momen bahagia yang selalu tersimpan di ingatan. (Klik foto untuk memperbesar)</p>
+      
+      <div id="polaroid-grid" class="polaroid-grid">
+        <!-- Rendered dynamically via script.js -->
+      </div>
+    </section>
+
+    <!-- Why I Love You Interactive Deck Section -->
+    <section class="section-container reasons-section" id="reasons-card">
+      <h2 class="section-title"><i class="fas fa-heart-circle-check icon-heart"></i> Alasan Kenapa Aku Sayang Kamu</h2>
+      <p class="reasons-desc">Ada banyak hal yang membuatku jatuh cinta padamu setiap hari. Ini beberapa di antaranya:</p>
+      
+      <div class="reasons-wrapper">
+        <div id="reasons-deck" class="reasons-deck">
+          <!-- Rendered dynamically via script.js -->
+        </div>
+        <div class="deck-controls">
+          <button id="prev-reason-btn" class="deck-btn" aria-label="Previous Reason"><i class="fas fa-arrow-left"></i> <span class="btn-text">Sebelumnya</span></button>
+          <button id="next-reason-btn" class="deck-btn" aria-label="Next Reason"><span class="btn-text">Berikutnya</span> <i class="fas fa-arrow-right"></i></button>
+        </div>
+      </div>
+    <!-- Interactive Love Quiz Section -->
+    <section class="section-container card-glass quiz-section" id="quiz-card">
+      <h2 class="section-title"><i class="fas fa-heart-pulse icon-heart"></i> Uji Kecocokan Cinta</h2>
+      <p class="quiz-desc">Ada satu pertanyaan penting buat kamu. Siap buat jawab? 😉</p>
+      <button id="start-quiz-btn" class="action-btn">
+        <i class="fas fa-play"></i> Mulai Pertanyaan 💖
+      </button>
+    </section>
+
+    <!-- Birthday Wishes & Cake Pop Surprise Section -->
+    <section class="section-container wishes-section card-glass" id="surprise-card">
+      <h2 class="section-title"><i class="fas fa-cake-candles icon-heart"></i> Make a Wish</h2>
+      <p class="wishes-desc">Kirim ucapan kembang api dan tiup lilin virtualnya!</p>
+      
+      <div class="cake-container">
+        <div class="cake">
+          <div class="candle">
+            <div class="flame" id="candle-flame"></div>
+          </div>
+          <div class="icing"></div>
+          <div class="garnish"></div>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button id="blow-candle-btn" class="action-btn">
+          <i class="fas fa-wind"></i> Tiup Lilin 🎂
+        </button>
+        <button id="fireworks-btn" class="action-btn">
+          <i class="fas fa-wand-magic-sparkles"></i> Nyalakan Kembang Api 🎆
+        </button>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <p>Dibuat dengan penuh cinta 💖 untuk <span id="footer-fullname">Alicia Monika</span></p>
+      <p class="copyright">&copy; 2026. All Rights Reserved.</p>
+    </footer>
+
+  </main>
+
+  <!-- Photo Lightbox Modal -->
+  <div id="lightbox" class="lightbox-modal">
+    <span class="lightbox-close" id="lightbox-close-btn">&times;</span>
+    <img class="lightbox-content" id="lightbox-img" alt="Zoomed Photo">
+    <div id="lightbox-caption" class="lightbox-caption"></div>
+  </div>
+
+  <!-- Load configuration file first, then main script -->
+  <script src="config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
