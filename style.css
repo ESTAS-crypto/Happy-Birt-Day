@@ -789,7 +789,8 @@ body {
   font-size: 1rem;
   cursor: pointer;
   box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
-  display: flex;
+  display: inline-flex;
+  justify-content: center;
   align-items: center;
   gap: 10px;
   transition: var(--transition-smooth);
@@ -991,23 +992,10 @@ body {
 }
 
 @media (max-width: 480px) {
-  .counter-grid {
-    grid-template-columns: repeat(5, 1fr);
-    gap: 6px;
+  .welcome-container {
+    padding: 15px;
   }
-  
-  .counter-card {
-    padding: 8px 4px;
-  }
-  
-  .counter-val {
-    font-size: 1.2rem;
-  }
-  
-  .counter-label {
-    font-size: 0.6rem;
-  }
-  
+
   .welcome-container .envelope-wrapper {
     width: 280px;
     height: 190px;
@@ -1029,6 +1017,19 @@ body {
     font-size: 1.15rem;
   }
 
+  .main-heading {
+    font-size: 1.9rem;
+  }
+
+  .sub-heading {
+    font-size: 0.95rem;
+  }
+
+  .typewriter-content {
+    font-size: 1.05rem;
+    line-height: 1.7;
+  }
+
   .btn-text {
     display: none;
   }
@@ -1040,6 +1041,66 @@ body {
     justify-content: center;
     border-radius: 50%;
     gap: 0;
+  }
+
+  .reasons-deck {
+    height: 260px;
+  }
+
+  .reason-card {
+    padding: 20px 15px;
+  }
+
+  .card-number {
+    font-size: 2.2rem;
+    margin-bottom: 8px;
+  }
+
+  .card-text {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .quiz-modal-content, .success-content {
+    padding: 30px 20px;
+    width: 92%;
+  }
+
+  .quiz-question {
+    font-size: 1.45rem;
+    margin-bottom: 20px;
+  }
+
+  .success-content h3 {
+    font-size: 1.6rem;
+  }
+
+  .success-letter {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .music-btn {
+    width: 45px;
+    height: 45px;
+    bottom: 15px;
+    right: 15px;
+    font-size: 1rem;
+  }
+
+  .lightbox-close {
+    top: 15px;
+    right: 20px;
+    font-size: 35px;
+  }
+  
+  .banner-content h2 {
+    font-size: 1.6rem;
+  }
+  
+  .banner-content p {
+    font-size: 0.95rem;
   }
 }
 
@@ -1083,12 +1144,34 @@ body {
   letter-spacing: 1px;
 }
 
-@media (max-width: 480px) {
-  .banner-content h2 {
-    font-size: 1.6rem;
+@media (max-width: 360px) {
+  .main-heading {
+    font-size: 1.65rem;
   }
-  .banner-content p {
-    font-size: 0.95rem;
+  
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .welcome-container .envelope-wrapper {
+    width: 250px;
+    height: 170px;
+  }
+  
+  .envelope::before {
+    border-left-width: 125px;
+    border-right-width: 125px;
+    border-top-width: 85px;
+  }
+  
+  .letter-preview {
+    width: 210px;
+    height: 120px;
+    left: 20px;
+  }
+
+  .preview-text {
+    font-size: 1rem;
   }
 }
 
