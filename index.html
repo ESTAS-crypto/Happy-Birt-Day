@@ -106,10 +106,12 @@
           <button id="next-reason-btn" class="deck-btn" aria-label="Next Reason"><span class="btn-text">Berikutnya</span> <i class="fas fa-arrow-right"></i></button>
         </div>
       </div>
+    </section>
+
     <!-- Interactive Love Quiz Section -->
     <section class="section-container card-glass quiz-section" id="quiz-card">
-      <h2 class="section-title"><i class="fas fa-heart-pulse icon-heart"></i> Uji Kecocokan Cinta</h2>
-      <p class="quiz-desc">Ada satu pertanyaan penting buat kamu. Siap buat jawab? 😉</p>
+      <h2 class="section-title"><i class="fas fa-heart-pulse icon-heart"></i> Pertanyaan Spesial</h2>
+      <p class="quiz-desc">Aku punya satu pertanyaan penting buat kamu. Dijawab jujur ya! 😉</p>
       <button id="start-quiz-btn" class="action-btn">
         <i class="fas fa-play"></i> Mulai Pertanyaan 💖
       </button>
@@ -153,6 +155,27 @@
     <span class="lightbox-close" id="lightbox-close-btn">&times;</span>
     <img class="lightbox-content" id="lightbox-img" alt="Zoomed Photo">
     <div id="lightbox-caption" class="lightbox-caption"></div>
+  </div>
+
+  <!-- Love Quiz Modal Overlay -->
+  <div id="quiz-modal" class="quiz-modal-overlay">
+    <div class="quiz-modal-content card-glass">
+      <h3 class="quiz-question">Apakah Melinda sayang sama aku? ❤️</h3>
+      <div class="quiz-buttons">
+        <button id="yes-btn" class="quiz-btn-yes">Sayang Banget! 🥰</button>
+        <button id="no-btn" class="quiz-btn-no">Enggak 😜</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quiz Success Modal -->
+  <div id="success-modal" class="success-modal-overlay">
+    <div class="success-content card-glass">
+      <div class="success-heart-icon">❤️</div>
+      <h3>Hehehe, makasih ya! ❤️</h3>
+      <p class="success-letter">Aku juga sayang banget sama kamu, Melinda! Makasih ya udah selalu nemenin aku selama ini. 🥰💖</p>
+      <button id="close-success-btn" class="action-btn" style="margin: 0 auto;">Tutup 🌸</button>
+    </div>
   </div>
 
   <!-- Load configuration file first, then main script -->

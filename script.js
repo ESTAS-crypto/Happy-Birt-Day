@@ -50,8 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
         startTypewriter();
         musicToggle.classList.remove("hidden");
         
-        // Auto trigger celebration for Melinda's birthday!
-        setTimeout(checkAndTriggerBirthdayCelebration, 1500);
+        // Auto trigger celebration disabled to keep entrance clean and not overwhelming
       }, 100);
       
     }, 1500); // Wait for envelope flap & letter slide animations
@@ -72,12 +71,12 @@ document.addEventListener("DOMContentLoaded", () => {
       musicToggle.classList.add("playing");
       musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
       
-      // Volume fade-in
+      // Volume fade-in to max 70% (0.7)
       let vol = 0;
       const interval = setInterval(() => {
         vol += 0.05;
-        if (vol >= 1) {
-          bgMusic.volume = 1;
+        if (vol >= 0.7) {
+          bgMusic.volume = 0.7;
           clearInterval(interval);
         } else {
           bgMusic.volume = vol;
@@ -302,6 +301,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Give random tilts/transforms for realistic organic look
       const tilt = (Math.random() * 8 - 4).toFixed(2); // Tilt between -4 and 4 degrees
       polaroid.style.transform = `rotate(${tilt}deg)`;
+      polaroid.dataset.tilt = tilt; // cache the tilt for resets
       
       // Check if image custom styles are needed
       let imgStyle = "";
@@ -365,8 +365,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // 8. WHY I LOVE YOU INTERACTIVE CARDS CAROUSEL
-  let activeReasonIdx = 0;
-  let reasonCards = [];
+  var activeReasonIdx = 0;
+  var reasonCards = [];
 
   function renderReasonsDeck() {
     const deck = document.getElementById("reasons-deck");
@@ -536,27 +536,17 @@ document.addEventListener("DOMContentLoaded", () => {
   renderPolaroidGrid();
   renderReasonsDeck();
   initCanvasHearts();
+  initPolaroidTilts();
 
-  // 11. CLICK TO SPAWN HEARTS IN CANVAS
+  // 11. CLICK TO SPAWN FIREWORKS ON SCREEN
   window.addEventListener("mousedown", (e) => {
     // Avoid spawning on buttons, polaroid cards, and floating controls
     if (e.target.tagName === 'BUTTON' || e.target.closest('button') || e.target.closest('.polaroid') || e.target.closest('.music-btn')) {
       return;
     }
     
-    // Spawn 8 hearts at coordinates
-    for (let i = 0; i < 8; i++) {
-      const p = new HeartParticle();
-      p.x = e.clientX + (Math.random() * 24 - 12);
-      p.y = e.clientY + (Math.random() * 24 - 12);
-      p.size = Math.random() * 8 + 6;
-      p.speedY = -(Math.random() * 2 + 1);
-      p.speedX = (Math.random() - 0.5) * 1.5;
-      p.opacity = 1;
-      p.isClickSpawned = true;
-      p.isDead = false;
-      particles.push(p);
-    }
+    // Launch a firework explosion at click location!
+    createSparkles(e.clientX, e.clientY, 35);
   });
 
   // 12. BIRTHDAY DETECTOR AND AUTO CELEBRATION
@@ -606,5 +596,118 @@ document.addEventListener("DOMContentLoaded", () => {
       }, 600);
     }, 5000);
   }
+
+  // 13. 3D PARALLAX TILT EFFECT ON POLAROIDS
+  function initPolaroidTilts() {
+    const polaroids = document.querySelectorAll(".polaroid");
+    
+    polaroids.forEach(card => {
+      card.addEventListener("mousemove", (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left; // x coordinate inside element
+        const y = e.clientY - rect.top;  // y coordinate inside element
+        
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        // Calculate tilt angle based on cursor offset from center
+        const rotateX = -(y - centerY) / 8; // Max tilt 10 degrees or so
+        const rotateY = (x - centerX) / 8;
+        
+        // Apply 3D tilt transform
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.04, 1.04, 1.04)`;
+        card.style.transition = "transform 0.1s ease"; // responsive follow
+      });
+      
+      card.addEventListener("mouseleave", () => {
+        // Reset tilt with cached randomized organic angle
+        const tilt = card.dataset.tilt || 0;
+        card.style.transform = `rotate(${tilt}deg)`;
+        card.style.transition = "transform 0.5s ease"; // smooth reset
+      });
+    });
+  }
+
+  // 14. INTERACTIVE LOVE QUIZ LOGIC
+  const startQuizBtn = document.getElementById("start-quiz-btn");
+  const quizModal = document.getElementById("quiz-modal");
+  const successModal = document.getElementById("success-modal");
+  const yesBtn = document.getElementById("yes-btn");
+  const noBtn = document.getElementById("no-btn");
+  const closeSuccessBtn = document.getElementById("close-success-btn");
+  const quizContent = document.querySelector(".quiz-modal-content");
+
+  startQuizBtn.addEventListener("click", () => {
+    quizModal.style.display = "flex";
+    setTimeout(() => {
+      quizModal.classList.add("show");
+    }, 10);
+  });
+
+  // Teleport the 'Enggak' button when hovered or touched
+  function teleportNoBtn() {
+    // Switch to absolute positioning so it breaks out of the normal layout flow
+    noBtn.style.position = "absolute";
+    
+    const modalRect = quizContent.getBoundingClientRect();
+    const btnRect = noBtn.getBoundingClientRect();
+    
+    // Calculate boundaries inside the modal content card (subtract margins/padding)
+    const maxX = modalRect.width - btnRect.width - 40;
+    const maxY = modalRect.height - btnRect.height - 40;
+    
+    const randomX = Math.random() * maxX + 20;
+    const randomY = Math.random() * maxY + 20;
+    
+    // Position absolute coordinates relative to the modal content card
+    noBtn.style.left = `${randomX}px`;
+    noBtn.style.top = `${randomY}px`;
+  }
+
+  noBtn.addEventListener("mouseover", teleportNoBtn);
+  noBtn.addEventListener("touchstart", (e) => {
+    e.preventDefault(); // Prevent double triggers
+    teleportNoBtn();
+  }, { passive: false });
+  noBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    teleportNoBtn();
+  });
+
+  // Click 'Sayang Banget' -> success state
+  yesBtn.addEventListener("click", () => {
+    quizModal.classList.remove("show");
+    setTimeout(() => {
+      quizModal.style.display = "none";
+      
+      // Open success modal
+      successModal.style.display = "flex";
+      setTimeout(() => {
+        successModal.classList.add("show");
+      }, 10);
+      
+      // Trigger romantic explosion (balloons & fireworks)
+      createBalloons(30);
+      for (let i = 0; i < 8; i++) {
+        setTimeout(() => {
+          const x = Math.random() * canvas.width;
+          const y = Math.random() * (canvas.height * 0.5) + (canvas.height * 0.1);
+          createSparkles(x, y, 45);
+        }, i * 250);
+      }
+      
+    }, 400);
+  });
+
+  closeSuccessBtn.addEventListener("click", () => {
+    successModal.classList.remove("show");
+    setTimeout(() => {
+      successModal.style.display = "none";
+      // Reset noBtn position and styling to normal layout
+      noBtn.style.position = "";
+      noBtn.style.left = "";
+      noBtn.style.top = "";
+    }, 400);
+  });
 
 });
