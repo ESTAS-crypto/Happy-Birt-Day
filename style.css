@@ -572,6 +572,11 @@ body {
   margin-bottom: 40px;
 }
 
+.quiz-desc {
+  color: var(--color-text-muted);
+  margin-bottom: 30px;
+}
+
 .reasons-wrapper {
   position: relative;
   max-width: 500px;
